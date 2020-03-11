@@ -124,7 +124,6 @@ describe('ServerlessWebpack', () => {
       sandbox.stub(slsw, 'compile').returns(BbPromise.resolve());
       sandbox.stub(slsw, 'packageModules').returns(BbPromise.resolve());
       sandbox.stub(slsw, 'prepareLocalInvoke').returns(BbPromise.resolve());
-      sandbox.stub(slsw, 'prepareOfflineInvoke').returns(BbPromise.resolve());
       sandbox.stub(slsw, 'prepareStepOfflineInvoke').returns(BbPromise.resolve());
     });
 
@@ -341,32 +340,6 @@ describe('ServerlessWebpack', () => {
             it('should call packageModules', () => {
               return expect(slsw.hooks['webpack:package:packageModules']()).to.be.fulfilled.then(() => {
                 expect(slsw.packageModules).to.have.been.calledOnce;
-                return null;
-              });
-            });
-          }
-        },
-        {
-          name: 'before:offline:start',
-          test: () => {
-            it('should prepare offline', () => {
-              return expect(slsw.hooks['before:offline:start']()).to.be.fulfilled.then(() => {
-                expect(ServerlessWebpack.lib.webpack.isLocal).to.be.true;
-                expect(slsw.prepareOfflineInvoke).to.have.been.calledOnce;
-                expect(slsw.wpwatch).to.have.been.calledOnce;
-                return null;
-              });
-            });
-          }
-        },
-        {
-          name: 'before:offline:start:init',
-          test: () => {
-            it('should prepare offline', () => {
-              return expect(slsw.hooks['before:offline:start:init']()).to.be.fulfilled.then(() => {
-                expect(ServerlessWebpack.lib.webpack.isLocal).to.be.true;
-                expect(slsw.prepareOfflineInvoke).to.have.been.calledOnce;
-                expect(slsw.wpwatch).to.have.been.calledOnce;
                 return null;
               });
             });

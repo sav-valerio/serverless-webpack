@@ -19,7 +19,6 @@ and much more!
 * Support of `serverless package`, `serverless deploy` and `serverless deploy function`
 * Support of `serverless invoke local` and `serverless invoke local --watch`
 * Support of `serverless run` and `serverless run --watch`
-* Integrates with [`serverless-offline`][link-serverless-offline] to simulate local API Gateway endpoints
 * When enabled in your service configuration, functions are packaged and compiled
 individually, resulting in smaller Lambda packages that contain only the code and
 dependencies needed to run the function. This allows the plugin to fully utilize
@@ -589,36 +588,6 @@ You can enable source watch mode with `serverless run --watch`. The plugin will
 then watch for any source changes, recompile and redeploy the code to the event
 gateway. So you can just keep the event gateway running and test new code immediately.
 
-### Usage with serverless-offline
-
-The plugin integrates very well with [serverless-offline][link-serverless-offline] to
-simulate AWS Lambda and AWS API Gateway locally.
-
-Add the plugins to your `serverless.yml` file and make sure that `serverless-webpack`
-precedes `serverless-offline` as the order is important:
-```yaml
-  plugins:
-    ...
-    - serverless-webpack
-    ...
-    - serverless-offline
-    ...
-```
-
-Run `serverless offline` or `serverless offline start` to start the Lambda/API simulation.
-
-In comparison to `serverless offline`, the `start` command will fire an `init` and a `end` lifecycle hook which is needed for `serverless-offline` and e.g. `serverless-dynamodb-local` to switch off resources (see below).
-
-You can find an example setup in the [`examples`][link-examples] folder.
-
-By default the plugin starts in watch mode when triggered through `serverless offline`, i.e.
-it automatically recompiles your code if it detects a change in the used sources.
-After a change it might take some seconds until the emulated endpoints are updated.
-
-If you have your sources located on a file system that does not offer events,
-e.g. a mounted volume in a Docker container, you can enable polling with the
-`--webpack-use-polling=<time in ms>` option. If you omit the value, it defaults
-to 3000 ms.
 
 #### Custom paths
 
@@ -692,7 +661,6 @@ The following serverless plugins are explicitly supported with `serverless-webpa
 
 | Plugin                            | NPM |
 |-----------------------------------|-----|
-| serverless-offline | [![NPM][ico-serverless-offline]][link-serverless-offline] |
 | serverless-step-functions-offline | [![NPM][ico-step-functions-offline]][link-step-functions-offline] |
 
 ## For developers
